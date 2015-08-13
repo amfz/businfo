@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>By the Numbers</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <style>
+        body {
+            width: 85%;
+            max-width: 875px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 100%;
+            line-height: 24px;
+            margin: 0 auto;  
+        }
+        h1 {
+            font-size: 2em;
+        }
+        h2 {
+            font-size: 1.5em;
+        }
+        section {
+            height: auto;
+            margin: 50px auto;
+            padding: 25px 15px;
+        }
+        div {
+            margin: 0 auto;
+        }
+        span {
+            font-weight: bold;
+        }
+        .container {
+            height: auto;
+            margin: 5px auto 10px auto;
+        }
+        .container::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .description {
+            width: 40%;
+            max-width: 325px;
+            min-width: 250px;
+            margin: 10px 0 0 0;
+            padding: 10px 5px;
+            position: relative;
+            top: -40px;
+            float: right;
+            text-align: justify;
+        }
+        .standardbus {
+            height: 100px;
+            width: 360px;
+            background: #FFC107;
+            border-radius: 25px 25px 10px 10px;
+            margin: auto;
+            float: left;
+            clear: left;
+        }
+        .miniwagon {
+            height: 100px;
+            width: 180px;
+            background: #FFC107;
+            border-radius: 22px 22px 8px 8px;
+            margin: auto;
+            float: left;
+            clear: left;
+        }
+        .wheel {
+            height: 22px;
+            width: 22px;
+            background: #666;
+            border: 7px solid #333;
+            border-radius: 22px;
+            margin: 0 7px;
+            position: relative;
+            bottom: -80px;
+            right: -20px;
+            float: left;
+            z-index: 2;
+        }
+        .wheel2 {
+            float: right;
+            left: -20px;
+        }
+        .mwicon {
+            height: 10px;
+            width: 18px;
+            background: #FFC107;
+            border-radius: 4px 4px 2px 2px;
+            margin: 3px;
+            float: left;
+        }
+        .sbicon {
+            height: 10px;
+            width: 36px;
+            background: #FFC107;
+            border-radius: 4px 4px 2px 2px;
+            margin: 3px;
+            float: left;
+        }
+        .miniwheel {
+            height: 4px;
+            width: 4px;
+            background: #333;
+            border-radius: 4px;
+            margin: 0 1px;
+            position: relative;
+            bottom: -8px;
+            right: -2px;
+            float: left;
+            z-index: 2;
+        }
+        .miniwheel2 {
+            float: right;
+            left: -2px;
+        }
+        @media (max-width: 800px){
+            .description {
+                position: static;
+                float: left;
+                clear: left;
+            }
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 50px;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            p {
+                font-size: 1.2em;
+                line-height: 28px;
+                margin: 30px auto;
+            }
+        }
+</style>
+
+<script>
+    var date = "March 1, 2015";
+    var sbuses = 3846;
+    var mwagons = 4725;
+    var totallength = ((sbuses * 36) + (mwagons * 18)) / 5280;
+    var roundedlen = totallength.toFixed(1);
+    var totalarea = ((sbuses * 36 * 9) + (mwagons * 18 * 9)) / 43560;
+    var roundedarea = totalarea.toFixed(1);
+    var dist = "";
+    var space = "";
+    if (totallength > 45) {
+        dist = "more than halfway to Philadelphia from City Hall.";
+    } else if (totallength > 40) {
+        dist = "about halfway to Philadelphia from City Hall.";
+    } else if (totallength > 35) {
+        dist = "about the distance from City Hall to Greenwich, CT.";
+    } else if (totallength > 30) {
+        dist = "about the perimeter of Manhattan.";
+    } else if (totallength > 25) {
+        dist = "about the length of the F line.";
+    } else if (totallength > 20) {
+        dist = "about the distance from City Hall to Yonkers.";
+    } else {
+        dist = "quite far indeed.";
+    };
+    if (totalarea > 60) {
+        space = "Astoria Park";
+    } else if(totalarea > 40) {
+        space = "the Brooklyn Botanical Garden";
+    } else if (totalarea > 35) {
+        space = "Highland Park";
+    } else if (totalarea > 30) {
+        space = "McCarren Park";
+    } else if (totalarea > 25) {
+        space = "Morningside Park";
+    } else if (totalarea > 20) {
+        space = "Battery Park";
+    } else {
+        space = "a very, very big space";
+    }
+
+    $(document).ready(function () {
+        $("#date").html(date);
+        $("#standards").html(sbuses);
+        $("#miniwagons").html(mwagons);
+        $("#length").html(roundedlen);
+        $("#area").html(roundedarea);
+        $("#distance").html(dist);
+        $("#park").html(space);
+        for (var i = 0; i < mwagons; i++)
+            $("#counts").append("<div class='mwicon'><div class='miniwheel'></div><div class='miniwheel miniwheel2'></div></div>");
+        for (var i = 0; i < sbuses; i++)
+            $("#counts").append("<div class='sbicon'><div class='miniwheel'></div><div class='miniwheel miniwheel2'></div></div>");
+    });
+</script>
+</head>
+
+
+<body>
+    <section>
+        <h1>Introduction</h1>
+        <p>The Office of Pupil Transportation coordinates busing for nearly 300,000 students on over 7,000 routes each day. For all this activity, the city does not own a single bus—transportation is contracted out to 40 different companies.</p>
+    </section>
+    <section><h1>Meet the Fleet</h1>
+        <div class="container">
+            <h2>Standard Bus</h2>
+            <div class="standardbus">
+                <div class="wheel"></div>
+                <div class="wheel wheel2"></div>
+            </div>
+            <div class="description">
+                <p>Standard size buses, including those with hydraulic lifts, are used for stop-to-school and some door-to-door routes. Standard buses are <strong>36 feet</strong> long.</p>
+            </div>
+        </div>
+        <div class="container">
+            <h2>Mini Wagon</h2>
+            <div class="miniwagon">
+                <div class="wheel"></div>
+                <div class="wheel wheel2"></div>
+            </div>
+            <div class="description">
+                <p>Mini wagons, including those with ramps, are used for door-to-door busing. Mini wagons are <strong>18 feet</strong> long.</p>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h1>All Together Now</h1>
+        <div class="container" id="counts">
+            <!-- the magic here happens in the associated script -->
+            <p>The exact number of buses and routes running varies from day to day, depending on schools' and students' needs. There are also extra buses available in case of breakdowns.</p>
+            <p>As of <span id="date">an average school day</span>, there were <span id="standards">many</span> standard buses and <span id="miniwagons">even more</span> mini wagons available to transport students across New York City. Visualized, they'd look a bit like this:</p>
+        </div>
+        <div class="container">
+            <p style="float:right;">...That's a lot of buses.</p>
+            <p style="clear:both;">Lined up bumper to bumper, they would stretch <span id="length">several</span> miles, which is <span id="distance"></span></p>
+            <p>If all those buses were parked in one place, with two feet of clearance between buses, they would take up <span id="area"></span> acres, or a parking lot roughly the size of <span id="park"></span>.</p>
+        </div>
+    </section>
+</body>
+</html>
