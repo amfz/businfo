@@ -144,13 +144,14 @@
     var totallength = ((sbuses * 36) + (mwagons * 18)) / 5280;
     var roundedlen = totallength.toFixed(1);
     var totalarea = ((sbuses * 36 * 9) + (mwagons * 18 * 9)) / 43560;
+    var totalblocks =  (totalarea/237600).toFixed(1);
     var roundedarea = totalarea.toFixed(1);
     var dist = "";
     var space = "";
     if (totallength > 45) {
-        dist = "more than halfway to Philadelphia from City Hall.";
-    } else if (totallength > 40) {
         dist = "about halfway to Philadelphia from City Hall.";
+    } else if (totallength > 40) {
+        dist = "about the distance from City Hall to Stamford, CT.";
     } else if (totallength > 35) {
         dist = "about the distance from City Hall to Greenwich, CT.";
     } else if (totallength > 30) {
@@ -159,16 +160,20 @@
         dist = "about the length of the F line.";
     } else if (totallength > 20) {
         dist = "about the distance from City Hall to Yonkers.";
+    } else if (totallength > 15) {
+        dist = "about the distance from City Hall to the New York Botanical Garden."
+    } else if (totallength > 12) {
+        dist = "about the length of Manhattan."
     } else {
         dist = "quite far indeed.";
     };
     if (totalarea > 60) {
         space = "Astoria Park";
-    } else if(totalarea > 40) {
-        space = "the Brooklyn Botanical Garden";
-    } else if (totalarea > 35) {
+    } else if(totalarea > 45) {
+        space = "the Brooklyn Botanic Garden";
+    } else if (totalarea > 40) {
         space = "Highland Park";
-    } else if (totalarea > 30) {
+    } else if (totalarea > 35) {
         space = "McCarren Park";
     } else if (totalarea > 25) {
         space = "Morningside Park";
@@ -185,6 +190,7 @@
         $("#length").html(roundedlen);
         $("#area").html(roundedarea);
         $("#distance").html(dist);
+        $("#blocks").html(totalblocks);
         $("#park").html(space);
         for (var i = 0; i < mwagons; i++)
             $("#counts").append("<div class='mwicon'><div class='miniwheel'></div><div class='miniwheel miniwheel2'></div></div>");
@@ -232,12 +238,13 @@
         <div class="container">
             <p style="float:right;">...That's a lot of buses.</p>
             <p style="clear:both;">Lined up bumper to bumper, they would stretch <span id="length">several</span> miles, which is <span id="distance"></span></p>
-            <p>If all those buses were parked in one place, with two feet of clearance between buses, they would take up <span id="area"></span> acres, or a parking lot roughly the size of <span id="park"></span>.</p>
+            <p>If all those buses were parked in one place, with two feet of clearance between buses, they would take up <span id="area"></span> acres, equal to <span id="blocks"></span> city blocks or a parking lot roughly the size of <span id="park"></span>.</p>
         </div>
     </section>
     <section>
         <h1>About</h1>
-        <p>This page was created in response to a question about how long all the school buses in New York City would be laid end to end. Bus dimensions used for the calculations were obtained from aerial photographs. All distances from City Hall are along the road network.</p>
+        <p>This page was created in response to a question about how long all the school buses in New York City would be laid end to end. Bus dimensions used for the calculations were obtained from aerial imagery. All distances from City Hall are along the road network.
+        Park acreages come from the Department of Buildings (<a href="http://www.nyc.gov/html/dob/downloads/pdf/dpr_park_list.pdf">PDF</a>).</p>
     </section>
 </body>
 </html>
