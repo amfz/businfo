@@ -165,24 +165,25 @@
     } else if (totallength > 12) {
         dist = "about the length of Manhattan."
     } else {
-        dist = "quite far indeed.";
+        dist = "quite far indeed."; //placeholder
     };
     if (totalarea > 60) {
-        space = "Astoria Park";
+        space = "Astoria Park"; //66 acres
+    } else if (totalarea > 50) {
+        space = "Riverside Park"; //50 acres
     } else if(totalarea > 45) {
-        space = "the Brooklyn Botanic Garden";
+        space = "the Brooklyn Botanic Garden"; //48 acres
     } else if (totalarea > 40) {
-        space = "Highland Park";
+        space = "Manhattan Beach Park"; //40 acres
     } else if (totalarea > 35) {
-        space = "McCarren Park";
+        space = "McCarren Park"; //36 acres
     } else if (totalarea > 25) {
-        space = "Morningside Park";
+        space = "Morningside Park"; //30 acres
     } else if (totalarea > 20) {
-        space = "Battery Park";
+        space = "Battery Park"; //22 acres
     } else {
-        space = "a very, very big space";
+        space = "a very, very big space"; //placeholder
     }
-
     $(document).ready(function () {
         $("#date").html(date);
         $("#standards").html(sbuses);
@@ -243,8 +244,7 @@
     </section>
     <section>
         <h1>About</h1>
-        <p>This page was created in response to a question about how long all the school buses in New York City would be laid end to end. Bus dimensions used for the calculations were obtained from aerial imagery. All distances from City Hall are along the road network.
-        Park acreages come from the Department of Buildings (<a href="http://www.nyc.gov/html/dob/downloads/pdf/dpr_park_list.pdf">PDF</a>).</p>
+        <p>This page was created in response to a question about how long all the school buses in New York City would be laid end to end. Bus dimensions used for the calculations were obtained from aerial imagery. All distances from City Hall are along the road network. Park acreages come from the Department of Parks and Recreation (<a href="http://www.nyc.gov/html/dob/downloads/pdf/dpr_park_list.pdf">PDF</a>). Block counts were calculated using the Manhattan standard dimensions of 264 ft x 900 ft.</p>
     </section>
 </body>
 </html>
