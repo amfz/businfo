@@ -144,7 +144,7 @@
     var totallength = ((sbuses * 36) + (mwagons * 18)) / 5280;
     var roundedlen = totallength.toFixed(1);
     var totalarea = ((sbuses * 36 * 9) + (mwagons * 18 * 9)) / 43560;
-    var totalblocks =  (totalarea/237600).toFixed(1);
+    var totalblocks =  (((sbuses * 36 * 9) + (mwagons * 18 * 9))/237600).toFixed(1);
     var roundedarea = totalarea.toFixed(1);
     var dist = "";
     var space = "";
