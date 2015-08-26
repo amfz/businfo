@@ -5,18 +5,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <style>
         body {
-            width: 85%;
-            max-width: 875px;
+            width: 80%;
+            max-width: 860px;
             font-family: Arial, Helvetica, sans-serif;
             font-size: 100%;
             line-height: 24px;
             margin: 0 auto;  
         }
-        h1 {
-            font-size: 2em;
-        }
         h2 {
-            font-size: 1.5em;
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-size: 1.5rem;
         }
         section {
             height: auto;
@@ -116,17 +116,17 @@
             float: right;
             left: -2px;
         }
-        @media (max-width: 800px){
+        @media (max-width: 800px) and not print{
             .description {
                 position: static;
                 float: left;
                 clear: left;
             }
-            h1 {
+            h2 {
                 font-size: 2.5em;
                 margin-bottom: 50px;
             }
-            h2 {
+            h3 {
                 font-size: 1.8em;
             }
             p {
@@ -135,18 +135,40 @@
                 margin: 30px auto;
             }
         }
+
+        @media print {
+            @page {margin: .75cm 1cm;}
+            body {
+                color: #000;
+                background-color: #fff;
+                width: 100%;
+                margin: 0;
+                font-size: 12pt;
+            }
+            h1, h2, h3 {page-break-after: avoid;}
+            h2 {font-size: 20pt;}
+            h3 {font-size: 16pt;}
+            section {
+                margin: 7px auto 22px auto;
+                padding: 2px;
+                page-break-inside: avoid;
+            }
+            .container {margin: 2px 0 3px 0;}
+            .mwicon, .sbicon {page-break-inside: avoid;}
+        }
 </style>
 
 <script>
-    var date = "June 2015";
-    var sbuses = 3835;
-    var mwagons = 4732;
-    var sbuslen = 35;
+    var date = "August 26, 2015";
+    var sbuses = 4129; //includes GE,SE, hydraulic lifts, CD flex buses
+    var mwagons = 5476; //includes miniwagons, ramp wagons, AB flex
+    //not included: ambulances, alternative SUV-sized vehicles, coach buses
+    var sbuslen = 36;
     var mwlen = 18;
     var totallength = ((sbuses * sbuslen) + (mwagons * mwlen)) / 5280;
     var roundedlen = totallength.toFixed(1);
     var totalarea = ((sbuses * sbuslen * 9) + (mwagons * mwlen * 9)) / 43560;
-    var totalblocks =  (((sbuses * sbuslen * 9) + (mwagons * mwlen * 9))/237600).toFixed(1);
+    var totalblocks = (((sbuses * sbuslen * 9) + (mwagons * mwlen * 9)) / 237600).toFixed(1);
     var roundedarea = totalarea.toFixed(1);
     var dist = "";
     var space = "";
@@ -173,7 +195,7 @@
         space = "Astoria Park"; //66 acres
     } else if (totalarea > 50) {
         space = "Riverside Park"; //50 acres
-    } else if(totalarea > 45) {
+    } else if (totalarea > 45) {
         space = "the Brooklyn Botanic Garden"; //48 acres
     } else if (totalarea > 40) {
         space = "Manhattan Beach Park"; //40 acres
@@ -206,22 +228,22 @@
 
 <body>
     <section>
-        <h1>Introduction</h1>
+        <h2>Introduction</h2>
         <p>The Office of Pupil Transportation coordinates busing for nearly 150,000 school-aged children on over 7,000 routes each day. For all this activity, the city does not own a single bus—transportation is contracted out to 40 different companies.</p>
     </section>
-    <section><h1>Meet the Fleet</h1>
+    <section><h2>Meet the Fleet</h2>
         <div class="container">
-            <h2>Standard Bus</h2>
+            <h3>Standard Bus</h3>
             <div class="standardbus">
                 <div class="wheel"></div>
                 <div class="wheel wheel2"></div>
             </div>
             <div class="description">
-                <p>Standard size buses, including those with hydraulic lifts, are used for stop-to-school and some door-to-door routes. Standard buses are <strong>35 feet</strong> long.</p>
+                <p>Standard size buses, including those with hydraulic lifts, are used for stop-to-school and some door-to-door routes. Standard buses are <strong>36 feet</strong> long.</p>
             </div>
         </div>
         <div class="container">
-            <h2>Mini Wagon</h2>
+            <h3>Mini Wagon</h3>
             <div class="miniwagon">
                 <div class="wheel"></div>
                 <div class="wheel wheel2"></div>
@@ -232,7 +254,7 @@
         </div>
     </section>
     <section>
-        <h1>All Together Now</h1>
+        <h2>All Together Now</h2>
         <div class="container" id="counts">
             <!-- this section is filled in by the javascript above -->
             <p>The exact number of buses and routes running varies from day to day, depending on schools' and students' needs. There are also extra buses available in case of breakdowns.</p>
@@ -245,8 +267,8 @@
         </div>
     </section>
     <section>
-        <h1>About</h1>
-        <p>This page was created in response to a question about how long all the school buses in New York City would be laid end to end. Vehicle counts come from OPT metrics downloaded on August 18, 2015. Bus dimensions used for the calculations were obtained from aerial imagery. All distances from City Hall are along the road network. Park acreages come from the Department of Parks and Recreation (<a href="http://www.nyc.gov/html/dob/downloads/pdf/dpr_park_list.pdf">PDF</a>). Block counts were calculated using the Manhattan standard dimensions of 264 ft x 900 ft.</p>
+        <h2>About</h2>
+        <p>This page was created in response to a question about how long all the school buses in New York City would be laid end to end. Vehicle counts come from OPT metrics downloaded on August 26, 2015. Bus dimensions used for the calculations were obtained from aerial imagery. All distances from City Hall are along the road network. Park acreages come from the Department of Parks and Recreation (<a href="http://www.nyc.gov/html/dob/downloads/pdf/dpr_park_list.pdf">PDF</a>). Block counts were calculated using the Manhattan standard dimensions of 264 ft x 900 ft.</p>
     </section>
 </body>
 </html>
