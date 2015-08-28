@@ -2,6 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>By the Numbers</title>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
+    <script src='//api.tiles.mapbox.com/mapbox.js/plugins/turf/v1.4.0/turf.min.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <style>
         body {
@@ -25,6 +28,9 @@
         }
         div {
             margin: 0 auto;
+        }
+        #map {
+            height: 400px;
         }
         span {
             font-weight: bold;
@@ -156,73 +162,151 @@
             .container {margin: 2px 0 3px 0;}
             .mwicon, .sbicon {page-break-inside: avoid;}
         }
-</style>
+    </style>
 
-<script>
-    var date = "August 26, 2015";
-    var sbuses = 4129; //includes GE,SE, hydraulic lifts, CD flex buses
-    var mwagons = 5476; //includes miniwagons, ramp wagons, AB flex
-    //not included: ambulances, alternative SUV-sized vehicles, coach buses
-    var sbuslen = 36;
-    var mwlen = 18;
-    var totallength = ((sbuses * sbuslen) + (mwagons * mwlen)) / 5280;
-    var roundedlen = totallength.toFixed(1);
-    var totalarea = ((sbuses * sbuslen * 9) + (mwagons * mwlen * 9)) / 43560;
-    var totalblocks = (((sbuses * sbuslen * 9) + (mwagons * mwlen * 9)) / 237600).toFixed(1);
-    var roundedarea = totalarea.toFixed(1);
-    var dist = "";
-    var space = "";
-    if (totallength > 45) {
-        dist = "about halfway to Philadelphia from City Hall.";
-    } else if (totallength > 40) {
-        dist = "about the distance from City Hall to Stamford, CT.";
-    } else if (totallength > 35) {
-        dist = "about the distance from City Hall to Greenwich, CT.";
-    } else if (totallength > 30) {
-        dist = "about the perimeter of Manhattan.";
-    } else if (totallength > 25) {
-        dist = "about the length of the F line.";
-    } else if (totallength > 20) {
-        dist = "about the distance from City Hall to Yonkers.";
-    } else if (totallength > 15) {
-        dist = "about the distance from City Hall to the New York Botanical Garden."
-    } else if (totallength > 12) {
-        dist = "about the length of Manhattan."
-    } else {
-        dist = "quite far indeed."; //placeholder
-    };
-    if (totalarea > 60) {
-        space = "Astoria Park"; //66 acres
-    } else if (totalarea > 50) {
-        space = "Riverside Park"; //50 acres
-    } else if (totalarea > 45) {
-        space = "the Brooklyn Botanic Garden"; //48 acres
-    } else if (totalarea > 40) {
-        space = "Manhattan Beach Park"; //40 acres
-    } else if (totalarea > 35) {
-        space = "McCarren Park"; //36 acres
-    } else if (totalarea > 25) {
-        space = "Morningside Park"; //30 acres
-    } else if (totalarea > 20) {
-        space = "Battery Park"; //22 acres
-    } else {
-        space = "a very, very big space"; //placeholder
-    }
-    $(document).ready(function () {
-        $("#date").html(date);
-        $("#standards").html(sbuses);
-        $("#miniwagons").html(mwagons);
-        $("#length").html(roundedlen);
-        $("#area").html(roundedarea);
-        $("#distance").html(dist);
-        $("#blocks").html(totalblocks);
-        $("#park").html(space);
-        for (var i = 0; i < mwagons; i++)
-            $("#counts").append("<div class='mwicon'><div class='miniwheel'></div><div class='miniwheel miniwheel2'></div></div>");
-        for (var i = 0; i < sbuses; i++)
-            $("#counts").append("<div class='sbicon'><div class='miniwheel'></div><div class='miniwheel miniwheel2'></div></div>");
-    });
-</script>
+    <script>
+        var date = "August 26, 2015";
+        var sbuses = 4129; //includes GE,SE, hydraulic lifts, CD flex buses
+        var mwagons = 5476; //includes miniwagons, ramp wagons, AB flex
+        //not included: ambulances, alternative SUV-sized vehicles, coach buses
+        var sbuslen = 36;
+        var mwlen = 18;
+        var totallength = ((sbuses * sbuslen) + (mwagons * mwlen)) / 5280;
+        var roundedlen = totallength.toFixed(1);
+        var totalarea = (sbuses * sbuslen * 9) + (mwagons * mwlen * 9);
+        var totalacreage = totalarea / 43560;
+        var totalblocks = (((sbuses * sbuslen * 9) + (mwagons * mwlen * 9)) / 237600).toFixed(1);
+        var roundedarea = totalacreage.toFixed(1);
+        var dist = "";
+        var space = "";
+        if (totallength > 50) {
+            dist = "more than halfway to Philadelphia from City Hall.";
+        } else if (totallength > 45) {
+            dist = "about halfway to Philadelphia from City Hall.";
+        } else if (totallength > 40) {
+            dist = "about the distance from City Hall to Stamford, CT.";
+        } else if (totallength > 35) {
+            dist = "about the distance from City Hall to Greenwich, CT.";
+        } else if (totallength > 30) {
+            dist = "about the perimeter of Manhattan.";
+        } else if (totallength > 25) {
+            dist = "about the length of the F line.";
+        } else if (totallength > 20) {
+            dist = "about the distance from City Hall to Yonkers.";
+        } else if (totallength > 15) {
+            dist = "about the distance from City Hall to the New York Botanical Garden."
+        } else if (totallength > 12) {
+            dist = "about the length of Manhattan."
+        } else {
+            dist = "quite far indeed."; //placeholder
+        };
+        if (totalacreage > 60) {
+            space = "Astoria Park"; //66 acres
+        } else if (totalacreage > 50) {
+            space = "Riverside Park"; //50 acres
+        } else if (totalacreage > 45) {
+            space = "the Brooklyn Botanic Garden"; //48 acres
+        } else if (totalacreage > 40) {
+            space = "Manhattan Beach Park"; //40 acres
+        } else if (totalacreage > 35) {
+            space = "McCarren Park"; //36 acres
+        } else if (totalacreage > 25) {
+            space = "Morningside Park"; //30 acres
+        } else if (totalacreage > 20) {
+            space = "Battery Park"; //22 acres
+        } else {
+            space = "a very, very big space"; //placeholder
+        }
+        $(document).ready(function () {
+            $("#date").html(date);
+            $("#standards").html(sbuses);
+            $("#miniwagons").html(mwagons);
+            $("#length").html(roundedlen);
+            $("#area").html(roundedarea);
+            $("#distance").html(dist);
+            $("#blocks").html(totalblocks);
+            $("#park").html(space);
+            for (var i = 0; i < mwagons; i++)
+                $("#counts").append("<div class='mwicon'><div class='miniwheel'></div><div class='miniwheel miniwheel2'></div></div>");
+            for (var i = 0; i < sbuses; i++)
+                $("#counts").append("<div class='sbicon'><div class='miniwheel'></div><div class='miniwheel miniwheel2'></div></div>");
+
+            //the map
+            L.mapbox.accessToken = "pk.eyJ1IjoiYW1meiIsImEiOiI4MDFlMzZiOTBhMjdiNDg3N2RlYWUxYjlhMmMzZDk5MyJ9.XEHuzAoOR9pgXIMS7ykUdQ";
+            var map = L.mapbox.map("map", "amfz.81934cc5");
+
+            var stamenLayer = L.tileLayer("https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png", {
+                attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
+            }).addTo(map);
+
+            map.setView([40.766, -73.978], 14);
+
+            //get area bounds
+            var cparkSW = {
+                "type": "Feature",
+                "properties": {"title": "southwest corner"},
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [-73.981921, 40.768067]
+                }
+            };
+            var cparkNW = {
+                "type": "Feature",
+                "properties": { "title": "northwest corner" },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [-73.958165, 40.800606]
+                }
+            };
+            var cparkSE = {
+                "type": "Feature",
+                "properties": {"title": "southeast corner"},
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [-73.973023, 40.764292]
+                }
+            };
+            var cparkNE = {
+                "type": "Feature",
+                "properties": {"title": "northeast corner"},
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                      -73.9493179321289,
+                      40.79698248639272
+                    ]
+                }
+            };
+
+            //create the lot polygon
+            var cpLen = turf.distance(cparkSW, cparkSE, "miles");
+            var lotwidth = (totalarea / (cpLen * 5280)) / 5280;
+            var bearing = turf.bearing(cparkSW, cparkNW);
+            var lotNE = turf.destination(cparkSE, lotwidth, bearing, "miles");
+            var lotNW = turf.destination(cparkSW, lotwidth, bearing, "miles");
+
+            var buspts = {
+                "type": "FeatureCollection",
+                "features": [
+                    cparkSW,
+                    lotNW,
+                    lotNE,
+                    cparkSE
+                ]
+            };
+            var buslot = turf.convex(buspts);
+            var busstyle = {
+                "color": "#FFC107",
+                "fillOpacity": 0.5
+            };
+            L.geoJson(buslot, { style: busstyle }).addTo(map);
+            
+            //to check calculations
+            var buslotarea = turf.area(buslot);
+            console.log(buslotarea);
+      
+        });
+    </script>
 </head>
 
 
@@ -263,8 +347,9 @@
         <div class="container">
             <p style="float:right;">...That's a lot of buses.</p>
             <p style="clear:both;">Lined up bumper to bumper, they would stretch <span id="length">several</span> miles, which is <span id="distance"></span></p>
-            <p>If all those buses were parked in one place, with two feet of clearance between buses, they would take up <span id="area"></span> acres, equal to <span id="blocks"></span> city blocks or a parking lot roughly the size of <span id="park"></span>.</p>
+            <p>If all those buses were parked in one place, with two feet of clearance between buses, they would take up <span id="area"></span> acres, equal to <span id="blocks"></span> city blocks. Mapped onto Central Park, that lot would look like this:</p>
         </div>
+        <div id="map"></div>
     </section>
     <section>
         <h2>About</h2>
